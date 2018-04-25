@@ -6,11 +6,11 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 describe('app', function() {
-  it('should reply to get request', done => {
+  it('should reply to /shorten GET request', done => {
       chai.request(app)
-        .get('/')
+        .get('/shorten')
         .then(res => {
-          expect(res.text).to.equal('Hello Robly');
+          expect(res.text).to.exist;
           expect(res.status).to.equal(200);
           done();
         })
