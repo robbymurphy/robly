@@ -4,7 +4,7 @@ var app = express();
 
 app.get('/shorten', (req, res) => {
   res.json({
-    longUrl: req.params['longUrl'],
+    longUrl: req.query.longUrl,
     shortUrl: `http://rob.ly/${slugGenerator()}`
   });
 });
