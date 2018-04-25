@@ -1,6 +1,6 @@
-var express = require('express');
+const express = require('express');
 const slugGenerator = require('./slugGenerator');
-var app = express();
+const app = express();
 
 app.get('/shorten', (req, res) => {
   res.json({
