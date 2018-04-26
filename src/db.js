@@ -36,7 +36,7 @@ const db = {
       });
     });
   },
-  getExpandedUrl: shortUrl => {
+  getLink: shortUrl => {
     return new Promise((resolve, reject) => {
       Link.findOne({ shortUrl }, (err, link) => {
         if (err) {
