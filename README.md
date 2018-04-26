@@ -21,12 +21,12 @@ After the server has been started a web server will be listening on http://local
   - Parameters
     - `shortUrl` - required - the URL to be expanded
   - Result
-    - Success `{ "shortUrl": "http://rob.ly/abcdefg", "expandedUrl": "http://www.google.com" }`
-    - Error `{ "error": "exception occurred" }`
+    - Success - 200 - `{ "shortUrl": "http://rob.ly/abcdefg", "expandedUrl": "http://www.google.com" }`
+    - Error - 500 - `{ "error": "exception occurred" }`
 - `/shorten` - GET - /shorten?url=http://www.google.com&[slug=mySlug]
   - Parameters
     - `url` - required - the URL to be shortened
     - `slug` - optional - when provided, the slug to be used in the short URL path
   - Result
-    - Success `{ "shortUrl": "http://rob.ly/abcdefg", "expandedUrl": "http://www.google.com" }`
-    - Error `{ "error": "exception occurred" }`
+    - Success - 200 - `{ "shortUrl": "http://rob.ly/abcdefg", "expandedUrl": "http://www.google.com" }`
+    - Error - 500 - `{ "error": "exception occurred" }`
