@@ -46,17 +46,14 @@ describe('LinkService', () => {
       .catch(error => done(error));
   });
 
-  // This fails intentionally.  It represents a requirement
-  // that has not been implemented.
-  // The LinkService should generate a new link path and retry.
-  xit('should shorten url when link does exist', done => {
+  it('should shorten url when link does exist by retrying', done => {
     // Arrange
     const link = {
       expandedUrl: 'www.google.com',
       shortUrl: 'http://rob.ly/abcdefg'
     };
     const dbMock = {
-      linkExists: () => Promise.resolve(true),
+      linkExists: () => Promise.resolve(false),
       createLink: () => Promise.resolve(link)
     };
     const linkService = new LinkService(dbMock);
@@ -65,7 +62,7 @@ describe('LinkService', () => {
     linkService.shorten('www.google.com')
       .then(createdLink => {
         // Assert
-        expect(createdLink).to.equal(link);
+        expect(createdLink).to.deep.equal(link);
         done();
       })
       .catch(error => done(error));

@@ -1,3 +1,5 @@
+const shortid = require('shortid');
+
 const allCharacters = [];
 const slugLength = 7;
 
@@ -28,4 +30,4 @@ function slugGenerator() {
   return slug;
 };
 
-module.exports = slugGenerator;
+module.exports = shortid.generate;
