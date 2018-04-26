@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 
 const linkSchema = new mongoose.Schema({
   expandedUrl: String,
-  shortUrl: String
+  shortUrl: {
+    type: String,
+    index: { unique: true }
+  }
 });
 
 const Link = mongoose.model('Link', linkSchema);

@@ -30,3 +30,20 @@ After the server has been started a web server will be listening on http://local
   - Result
     - Success - 200 - `{ "shortUrl": "http://rob.ly/abcdefg", "expandedUrl": "http://www.google.com" }`
     - Error - 500 - `{ "error": "exception occurred" }`
+
+## Problem Space
+The main challenge around generating links is creating a unique 7-character slug as part of the shortened url path (the ABC12ab part in http://rob.ly/ABC12ab).  Using 7 characters [A-Z][a-z][0-9] there are 62^7 or ~3.5 trillion slugs not including custom-provided ones.  This is a lot of slugs, but considering 500 million tweets occur on average every day (many with shortened urls), 3.5 trillion starts to look a lot smaller.  Minimizing slug collisions becomes the main problem when the shortening service gets real traction.
+
+## Design Considerations
+
+### Database
+MongoDB was chosen for the database.  MongoDB supports all the features needed for a large, scalable database - sharding, replication, etc.
+
+The schema has been implemented as follows.
+- `Links` - collection
+  - `shortUrl` - unique
+  - `expandedUrl`
+
+#### Not Implemented
+- One could imagine that users would want to maintain their own links with their own domain instead of http://rob.ly  The database would need to be expanded with a `Users` collection and a `userId` field in the `Links` collection.  Typically, in nosql databases the user data would be denormalized and added directly to the `Links` collection, but considering the number of documents that the `Links` collection could contain there are definitely space concerns with that approach.
+- MongoDB has a Time To Live feature that could be added to the collection.  This would allow for a sliding expiration that could be used by mongod to automatically cleanup old, unused links.
