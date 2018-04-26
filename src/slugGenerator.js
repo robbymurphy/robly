@@ -1,5 +1,5 @@
 const allCharacters = [];
-const slugLength = 6;
+const slugLength = 7;
 
 function fillCharArray(startChar, endChar) {
   for(let i = startChar.charCodeAt(0); i <= endChar.charCodeAt(0); i++) {
