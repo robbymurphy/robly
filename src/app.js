@@ -36,7 +36,13 @@ app.get('/expand', (req, res) => {
 if (process.env.NODE_ENV !== 'test') {
   // bootstrap if we aren't testing,
   // if we're testing then we'll do custom bootstrapping
-  const mongodHelper = new MongodHelper(['--port', '27018']);
+  const fs = require('fs');
+  const dbPath = './db';
+  if (!fs.existsSync(dbPath)) {
+    fs.mkdirSync(dbPath);
+  }
+  
+  const mongodHelper = new MongodHelper(['--port', '27018', '--dbpath', './db']);
   mongodHelper.run()
     .then(started => {
       console.log('mongodb started');
