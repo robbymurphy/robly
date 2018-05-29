@@ -51,9 +51,10 @@ const db = {
       });
     });
   },
-  getAllLinks: () => {
+  getAllLinks: (pageNumber) => {
+    const itemsPerPage = 5;
     return new Promise((resolve, reject) => {
-      Link.find({}, (err, links) => {
+      const query = Link.find({}, (err, links) => {
         if (err) {
           reject(err);
         }
@@ -61,6 +62,10 @@ const db = {
           resolve(links);
         }
       });
+      console.log(typeof pageNumber);
+      if (typeof pageNumber === 'number') {
+        query.skip((pageNumber - 1) * itemsPerPage).limit(itemsPerPage);
+      }
     });
   },
   connect: () => mongoose.connect('mongodb://localhost:27018/robly')

@@ -35,7 +35,10 @@ app.get('/expand', (req, res) => {
 
 app.get('/list', (req, res) => {
   const linkService = linkServiceFactory.createLinkService();
-  linkService.getAll()
+  const pageNumber = parseInt(req.query.pageNumber);
+  const nextButton = pageNumber ? `<a href="http://localhost:8081/list?pageNumber=${pageNumber + 1}">Next</a>` : '';
+  const prevButton = pageNumber ? `<a href="http://localhost:8081/list?pageNumber=${pageNumber - 1}">Previous</a>` : '';
+  linkService.getAll(pageNumber)
     .then(links => {
       let linksHtml = '';
       for(let link of links) {
@@ -64,6 +67,7 @@ app.get('/list', (req, res) => {
             ${linksHtml}
           </tbody>
         </table>
+        ${prevButton}&nbsp;${nextButton}
       </body>
       
       </html>`)

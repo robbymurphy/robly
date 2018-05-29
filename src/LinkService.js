@@ -50,9 +50,9 @@ class LinkService {
     });
   }
 
-  getAll() {
+  getAll(pageNumber) {
     return new Promise((resolve, reject) => {
-      this.db.getAllLinks()
+      this.db.getAllLinks(pageNumber)
         .then(links => resolve(links))
         .catch(err => reject(err));
     });
