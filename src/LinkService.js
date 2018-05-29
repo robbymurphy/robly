@@ -57,6 +57,14 @@ class LinkService {
         .catch(err => reject(err));
     });
   }
+
+  deleteLink(shortUrl) {
+    return new Promise((resolve, reject) => {
+      this.db.deleteLink(shortUrl)
+        .then(result => resolve(result))
+        .catch(err => reject(err));
+    });
+  }
 }
 
 module.exports = LinkService;

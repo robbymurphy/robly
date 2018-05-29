@@ -68,6 +68,18 @@ const db = {
       }
     });
   },
+  deleteLink: (shortUrl) => {
+    return new Promise((resolve, reject) => {
+      Link.deleteOne({ shortUrl }, err => {
+        if (err) {
+          reject(err);
+        }
+        else {
+          resolve(true);
+        }
+      });
+    });
+  },
   connect: () => mongoose.connect('mongodb://localhost:27018/robly')
 };
 

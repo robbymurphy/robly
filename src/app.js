@@ -42,7 +42,8 @@ app.get('/list', (req, res) => {
     .then(links => {
       let linksHtml = '';
       for(let link of links) {
-        linksHtml += `<tr><td>${link.expandedUrl}</td><td>${link.shortUrl}</td></tr>`;
+        const deleteLink = `<td><a href="http://localhost:8081/deleteLink?shortUrl=${link.shortUrl}">DELETE</a></td>`;
+        linksHtml += `<tr><td>${link.expandedUrl}</td><td>${link.shortUrl}</td>${deleteLink}</tr>`;
       }
       return res.send(`<!doctype html>
       <html class="no-js" lang="">
@@ -61,6 +62,7 @@ app.get('/list', (req, res) => {
             <tr>
               <th>Long Url</th>
               <th>Shortened Url</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -72,7 +74,15 @@ app.get('/list', (req, res) => {
       
       </html>`)
     })
-  
+});
+
+
+
+app.get('/deleteLink', (req, res) => {
+  const shortUrl = req.query.shortUrl;
+  const linkService = linkServiceFactory.createLinkService();
+  linkService.deleteLink(shortUrl)
+    .then(() => res.redirect(req.get('Referrer')));
 });
 
 if (process.env.NODE_ENV !== 'test') {
