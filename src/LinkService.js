@@ -49,6 +49,14 @@ class LinkService {
         .catch(err => reject(err));
     });
   }
+
+  getAll() {
+    return new Promise((resolve, reject) => {
+      this.db.getAllLinks()
+        .then(links => resolve(links))
+        .catch(err => reject(err));
+    });
+  }
 }
 
 module.exports = LinkService;

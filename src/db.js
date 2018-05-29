@@ -51,6 +51,18 @@ const db = {
       });
     });
   },
+  getAllLinks: () => {
+    return new Promise((resolve, reject) => {
+      Link.find({}, (err, links) => {
+        if (err) {
+          reject(err);
+        }
+        else {
+          resolve(links);
+        }
+      });
+    });
+  },
   connect: () => mongoose.connect('mongodb://localhost:27018/robly')
 };
 

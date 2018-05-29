@@ -33,6 +33,44 @@ app.get('/expand', (req, res) => {
     .catch(error => res.status(500).json({ error }));
 });
 
+app.get('/list', (req, res) => {
+  const linkService = linkServiceFactory.createLinkService();
+  linkService.getAll()
+    .then(links => {
+      let linksHtml = '';
+      for(let link of links) {
+        linksHtml += `<tr><td>${link.expandedUrl}</td><td>${link.shortUrl}</td></tr>`;
+      }
+      return res.send(`<!doctype html>
+      <html class="no-js" lang="">
+      
+      <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      </head>
+      
+      <body>
+        <table>
+          <thead>
+            <tr>
+              <th>Long Url</th>
+              <th>Shortened Url</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${linksHtml}
+          </tbody>
+        </table>
+      </body>
+      
+      </html>`)
+    })
+  
+});
+
 if (process.env.NODE_ENV !== 'test') {
   // bootstrap if we aren't testing,
   // if we're testing then we'll do custom bootstrapping
